@@ -114,7 +114,7 @@ El servidor estará corriendo en `http://localhost:8080`.
 
 ## Pruebas
 
-Puedes utilizar [Postman](https://www.postman.com/) para probar los endpoints mencionados. Asegúrate de que el servidor esté corriendo antes de realizar las pruebas.
+Utilizar [Postman](https://www.postman.com/) para probar los endpoints mencionados. Verificar que el servidor esté corriendo antes de realizar las pruebas.
 
 ### Ejemplo de Prueba
 
@@ -130,7 +130,7 @@ Puedes utilizar [Postman](https://www.postman.com/) para probar los endpoints me
 ## Estructura del Proyecto
 
 ```plaintext
-pre-entrega-1-daniel-diaz-backend/
+1-pre-entrega-daniel-diaz-backend/
 ├── node_modules/
 ├── controllers/
 │   ├── productController.js
