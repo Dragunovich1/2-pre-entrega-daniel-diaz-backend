@@ -18,8 +18,8 @@ Este proyecto es un servidor básico de e-commerce que permite gestionar product
 1. Clonar el repositorio:
 
 ```sh
-git clone <URL_DEL_REPOSITORIO>
-cd pre-entrega-1-daniel-diaz-backend
+git clone https://github.com/Dragunovich1/1-pre-entrega-daniel-diaz-backend
+cd 1-pre-entrega-daniel-diaz-backend
 ```
 
 2. Instalar las dependencias:
