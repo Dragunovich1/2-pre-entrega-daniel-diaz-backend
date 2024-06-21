@@ -1,5 +1,15 @@
 
-# Pre-Entrega 1 - Daniel Díaz Backend
+# Primera pre-entrega - CoderHouse - Backend
+
+Alumno: Daniel Diaz
+
+Comisión: 70020
+
+Docente: Luis Alejandro Mera
+
+Tutores: Abigail Salas, Alexis Coronel
+
+# Descripción del proyecto
 
 Este proyecto es un servidor básico de e-commerce que permite gestionar productos y carritos de compra. Está desarrollado utilizando Node.js y Express.
 
