@@ -1,0 +1,16 @@
+[
+  {
+    "id": "1",
+    "title": "Consola Powkiddy",
+    "description": "Consola retro portatil",
+    "code": "PKD350",
+    "price": 150000,
+    "stock": 15,
+    "category": "Consolas Portatiles",
+    "thumbnails": [
+      "ruta/imagen1.jpg",
+      "ruta/imagen2.jpg"
+    ],
+    "status": true
+  }
+]
