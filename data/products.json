@@ -1,16 +1,32 @@
 [
   {
-    "id": "1",
-    "title": "Consola Powkiddy",
-    "description": "Consola retro portatil",
-    "code": "PKD350",
+    "title": "Consola Anbernic RG36X",
+    "description": "Consola portatil retro",
+    "code": "0000002",
+    "price": 200000,
+    "stock": 40,
+    "category": "Consolas",
+    "id": "1720365353819",
+    "status": true
+  },
+  {
+    "id": "1720367245808",
+    "title": "Consola portatil PowKiddy R35",
+    "description": "Consola portatil retro",
+    "code": "0000001",
     "price": 150000,
-    "stock": 15,
-    "category": "Consolas Portatiles",
-    "thumbnails": [
-      "ruta/imagen1.jpg",
-      "ruta/imagen2.jpg"
-    ],
+    "stock": 20,
+    "category": "Consolas",
+    "status": true
+  },
+  {
+    "id": "1720367303472",
+    "title": "Consola portatil Sup",
+    "description": "Consola retro simple con juegos precargados",
+    "code": "0000003",
+    "price": 40000,
+    "stock": 29,
+    "category": "Consolas",
     "status": true
   }
 ]

@@ -3,38 +3,32 @@ const path = require('path');
 const productsFilePath = path.join(__dirname, '../data/products.json');
 
 const readProducts = () => {
-    return JSON.parse(fs.readFileSync(productsFilePath, 'utf-8'));
+    const data = fs.readFileSync(productsFilePath);
+    return JSON.parse(data);
 };
 
-const writeProducts = (data) => {
-    fs.writeFileSync(productsFilePath, JSON.stringify(data, null, 2));
+const writeProducts = (products) => {
+    fs.writeFileSync(productsFilePath, JSON.stringify(products, null, 2));
 };
 
-const getAllProducts = (req, res) => {
+const getProducts = (req, res) => {
     const products = readProducts();
-    const limit = parseInt(req.query.limit) || products.length;
-    res.json(products.slice(0, limit));
+    res.json(products);
 };
 
 const getProductById = (req, res) => {
     const products = readProducts();
     const product = products.find(p => p.id === req.params.pid);
-    if (product) {
-        res.json(product);
-    } else {
-        res.status(404).json({ message: 'Producto no encontrado' });
-    }
+    res.json(product);
 };
 
 const addProduct = (req, res) => {
     const products = readProducts();
-    const newProduct = {
-        id: Date.now().toString(),
-        ...req.body,
-        status: req.body.status !== undefined ? req.body.status : true
-    };
+    const newProduct = { id: Date.now(), ...req.body };
     products.push(newProduct);
     writeProducts(products);
+
+    req.io.emit('updateProducts', products); // Emitir evento de actualización
     res.status(201).json(newProduct);
 };
 
@@ -42,24 +36,27 @@ const updateProduct = (req, res) => {
     const products = readProducts();
     const productIndex = products.findIndex(p => p.id === req.params.pid);
     if (productIndex !== -1) {
-        const updatedProduct = { ...products[productIndex], ...req.body, id: products[productIndex].id };
-        products[productIndex] = updatedProduct;
+        products[productIndex] = { ...products[productIndex], ...req.body };
         writeProducts(products);
-        res.json(updatedProduct);
+
+        req.io.emit('updateProducts', products); // Emitir evento de actualización
+        res.json(products[productIndex]);
     } else {
-        res.status(404).json({ message: 'Producto no encontrado' });
+        res.status(404).send('Producto no encontrado');
     }
 };
 
 const deleteProduct = (req, res) => {
-    let products = readProducts();
-    products = products.filter(p => p.id !== req.params.pid);
-    writeProducts(products);
-    res.status(204).end();
+    const products = readProducts();
+    const updatedProducts = products.filter(p => p.id !== req.params.pid);
+    writeProducts(updatedProducts);
+
+    req.io.emit('updateProducts', updatedProducts); // Emitir evento de actualización
+    res.status(204).send();
 };
 
 module.exports = {
-    getAllProducts,
+    getProducts,
     getProductById,
     addProduct,
     updateProduct,

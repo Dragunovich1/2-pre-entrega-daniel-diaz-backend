@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.min.css">
+</head>
+<body>
+    <h1>Productos en Tiempo Real</h1>
+    <ul id="products-list">
+        {{#each products}}
+        <li id="{{this.id}}">
+            {{this.title}} - ${{this.price}}
+            <button onclick="deleteProduct('{{this.id}}')">Eliminar</button>
+        </li>
+        {{/each}}
+    </ul>
+    <h1>Agregar productos</h1>
+    <form id="product-form">
+        <input type="text" id="title" placeholder="Titulo" required>
+        <input type="text" id="description" placeholder="Descripción" required>
+        <input type="text" id="code" placeholder="Código" required>
+        <input type="number" id="price" placeholder="Precio" required>
+        <input type="number" id="stock" placeholder="Stock" required>
+        <input type="text" id="category" placeholder="Categoría" required>
+        <button type="submit">Agregar producto</button>
+    </form>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+
+        document.getElementById('product-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const product = {
+                title: document.getElementById('title').value,
+                description: document.getElementById('description').value,
+                code: document.getElementById('code').value,
+                price: parseFloat(document.getElementById('price').value),
+                stock: parseInt(document.getElementById('stock').value),
+                category: document.getElementById('category').value,
+            };
+
+            fetch('/api/products', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(product),
+            }).then(response => response.json())
+              .then(data => {
+                  console.log(data);
+                  document.getElementById('product-form').reset();  // Resetear el formulario
+              });
+        });
+
+        function deleteProduct(productId) {
+            fetch(`/api/products/${productId}`, {
+                method: 'DELETE'
+            }).then(response => response.json())
+              .then(data => console.log(data));
+        }
+
+        socket.on('update-products', (products) => {
+            const productsList = document.getElementById('products-list');
+            productsList.innerHTML = '';
+            products.forEach(product => {
+                const listItem = document.createElement('li');
+                listItem.id = product.id;
+                listItem.innerHTML = `${product.title} - $${product.price} <button onclick="deleteProduct('${product.id}')">Eliminar</button>`;
+                productsList.appendChild(listItem);
+            });
+        });
+    </script>
+</body>
+</html>
